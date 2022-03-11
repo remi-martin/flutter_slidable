@@ -262,7 +262,7 @@ class _SlidableState extends State<Slidable>
     );
 
     content = Stack(
-      clipBehavior: Clip.none,
+      clipBehavior: widget.clipBehavior ?? Clip.hardEdge,
       children: <Widget>[
         if (actionPane != null)
           Positioned.fill(
@@ -277,21 +277,7 @@ class _SlidableState extends State<Slidable>
         content,
       ],
     );
-    return SlidableGestureDetector(
-      enabled: widget.enabled,
-      controller: controller,
-      direction: widget.direction,
-      dragStartBehavior: widget.dragStartBehavior,
-      child: SlidableAutoCloseNotificationSender(
-        groupTag: widget.groupTag,
-        controller: controller,
-        child: SlidableScrollingBehavior(
-          controller: controller,
-          closeOnScroll: widget.closeOnScroll,
-          child: content,
-        ),
-      ),
-    );
+
     return SlidableGestureDetector(
       enabled: widget.enabled,
       controller: controller,
@@ -306,6 +292,7 @@ class _SlidableState extends State<Slidable>
           child: SlidableDismissal(
             axis: flipAxis(widget.direction),
             controller: controller,
+            clipBehavior: widget.clipBehavior,
             child: ActionPaneConfiguration(
               alignment: actionPaneAlignment,
               direction: widget.direction,

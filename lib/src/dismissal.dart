@@ -11,11 +11,13 @@ class SlidableDismissal extends StatefulWidget {
     required this.axis,
     required this.controller,
     required this.child,
+    this.clipBehavior,
   }) : super(key: key);
 
   final Axis axis;
   final Widget child;
   final SlidableController controller;
+  final Clip? clipBehavior;
 
   @override
   _SlidableDismissalState createState() => _SlidableDismissalState();
@@ -90,6 +92,9 @@ class _SlidableDismissalState extends State<SlidableDismissal>
       }());
     }
 
+    if(widget.clipBehavior == Clip.none) {
+      return widget.child;
+    }
     return SizeTransition(
       sizeFactor: resizeAnimation,
       axis: widget.axis,
