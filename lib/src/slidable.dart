@@ -277,13 +277,24 @@ class _SlidableState extends State<Slidable>
         content,
       ],
     );
-
     return SlidableGestureDetector(
       enabled: widget.enabled,
       controller: controller,
       direction: widget.direction,
       dragStartBehavior: widget.dragStartBehavior,
-      child: content,
+      child: SlidableAutoCloseNotificationSender(
+        groupTag: widget.groupTag,
+        controller: controller,
+        child: SlidableScrollingBehavior(
+          controller: controller,
+          closeOnScroll: widget.closeOnScroll,
+          child: SlidableDismissal(
+            axis: flipAxis(widget.direction),
+            controller: controller,
+            child: content,
+          ),
+        ),
+      ),
     );
     return SlidableGestureDetector(
       enabled: widget.enabled,
