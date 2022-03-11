@@ -262,10 +262,17 @@ class _SlidableState extends State<Slidable>
     );
 
     content = Stack(
+      clipBehavior: widget.clipBehavior ?? Clip.hardEdge,
       children: <Widget>[
         if (actionPane != null)
           Positioned.fill(
-            child: actionPane ?? const SizedBox(),
+            child: ClipRect(
+              clipper: _SlidableClipper(
+                axis: widget.direction,
+                controller: controller,
+              ),
+              child: actionPane,
+            ),
           ),
         content,
       ],
