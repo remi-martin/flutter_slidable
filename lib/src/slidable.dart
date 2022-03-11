@@ -265,7 +265,7 @@ class _SlidableState extends State<Slidable>
       clipBehavior: Clip.none,
       children: <Widget>[
         if (actionPane != null)
-          /*Positioned.fill(
+          Positioned.fill(
             child: ClipRect(
               clipper: _SlidableClipper(
                 axis: widget.direction,
@@ -273,14 +273,18 @@ class _SlidableState extends State<Slidable>
               ),
               child: actionPane,
             ),
-          ),*/
-          SizedBox(
-            child: actionPane,
           ),
         content,
       ],
     );
 
+    return SlidableGestureDetector(
+      enabled: widget.enabled,
+      controller: controller,
+      direction: widget.direction,
+      dragStartBehavior: widget.dragStartBehavior,
+      child: widget.child,
+    );
     return SlidableGestureDetector(
       enabled: widget.enabled,
       controller: controller,
