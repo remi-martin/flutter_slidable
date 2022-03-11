@@ -288,11 +288,7 @@ class _SlidableState extends State<Slidable>
         child: SlidableScrollingBehavior(
           controller: controller,
           closeOnScroll: widget.closeOnScroll,
-          child: SlidableDismissal(
-            axis: flipAxis(widget.direction),
-            controller: controller,
-            child: content,
-          ),
+          child: content,
         ),
       ),
     );
