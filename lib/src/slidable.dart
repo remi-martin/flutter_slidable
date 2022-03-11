@@ -291,13 +291,7 @@ class _SlidableState extends State<Slidable>
           child: SlidableDismissal(
             axis: flipAxis(widget.direction),
             controller: controller,
-            child: ActionPaneConfiguration(
-              alignment: actionPaneAlignment,
-              direction: widget.direction,
-              isStartActionPane:
-              controller.actionPaneType.value == ActionPaneType.start,
-              child: content,
-            ),
+            child: content,
           ),
         ),
       ),
