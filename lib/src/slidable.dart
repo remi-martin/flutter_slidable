@@ -283,7 +283,7 @@ class _SlidableState extends State<Slidable>
       controller: controller,
       direction: widget.direction,
       dragStartBehavior: widget.dragStartBehavior,
-      child: widget.child,
+      child: content,
     );
     return SlidableGestureDetector(
       enabled: widget.enabled,
