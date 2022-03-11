@@ -28,7 +28,15 @@ class Slidable extends StatefulWidget {
     this.dragStartBehavior = DragStartBehavior.down,
     this.useTextDirection = true,
     required this.child,
+    this.controller, this.clipBehavior,
   }) : super(key: key);
+
+  /// Whether this slidable is interactive.
+  ///
+  /// If false, the child will not slid to show actions.
+  ///
+  /// Defaults to true.
+  final SlidableController? controller;
 
   /// Whether this slidable is interactive.
   ///
@@ -94,6 +102,23 @@ class Slidable extends StatefulWidget {
   /// See also:
   ///
   ///  * [DragGestureRecognizer.dragStartBehavior], which gives an example for the different behaviors.
+  final Clip? clipBehavior;
+
+  /// Determines the way that drag start behavior is handled.
+  ///
+  /// If set to [DragStartBehavior.start], the drag gesture used to dismiss a
+  /// dismissible will begin upon the detection of a drag gesture. If set to
+  /// [DragStartBehavior.down] it will begin when a down event is first detected.
+  ///
+  /// In general, setting this to [DragStartBehavior.start] will make drag
+  /// animation smoother and setting it to [DragStartBehavior.down] will make
+  /// drag behavior feel slightly more reactive.
+  ///
+  /// By default, the drag start behavior is [DragStartBehavior.start].
+  ///
+  /// See also:
+  ///
+  ///  * [DragGestureRecognizer.dragStartBehavior], which gives an example for the different behaviors.
   final DragStartBehavior dragStartBehavior;
 
   /// The widget below this widget in the tree.
@@ -134,8 +159,8 @@ class _SlidableState extends State<Slidable>
   @override
   void initState() {
     super.initState();
-    controller = SlidableController(this)
-      ..actionPaneType.addListener(handleActionPanelTypeChanged);
+    controller = widget.controller ?? SlidableController(this);
+    controller.actionPaneType.addListener(handleActionPanelTypeChanged);
   }
 
   @override
@@ -242,6 +267,7 @@ class _SlidableState extends State<Slidable>
         if (actionPane != null)
           Positioned.fill(
             child: ClipRect(
+              clipBehavior: widget.clipBehavior ?? Clip.hardEdge,
               clipper: _SlidableClipper(
                 axis: widget.direction,
                 controller: controller,
